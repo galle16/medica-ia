@@ -75,10 +75,10 @@ export default function ClinicaIA() {
     try {
       const modeContext = mode === "doctor" ? "\n[MODO: Personal médico]" : "\n[MODO: Paciente]";
       const callAPI = async (retries = 2) => {
-        const res = await fetch("https://api.anthropic.com/v1/messages", {
+        const res = await fetch("/api/chat", {
           method: "POST",
-          headers: { "Content-Type": "application/json", "anthropic-dangerous-direct-browser-access": "true" },
-          body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: SYSTEM_PROMPT + modeContext, messages: newMessages }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ system: SYSTEM_PROMPT + modeContext, messages: newMessages }),
         });
         if (!res.ok) {
           const e = await res.json().catch(() => ({}));
