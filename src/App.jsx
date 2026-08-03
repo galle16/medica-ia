@@ -90,7 +90,8 @@ export default function ClinicaIA() {
       const data = await callAPI();
       setMessages([...newMessages, { role: "assistant", content: data.content?.[0]?.text || "No pude procesar tu consulta." }]);
     } catch (err) {
-      const msg = err.message?.includes("529") ? "Servicio saturado, reintentando... 🔄" : "Error de conexión. Intenta nuevamente ⚠️";
+      console.error("MédicaIA API error:", err);
+      const msg = err.message?.includes("529") ? "Servicio saturado, reintentando... 🔄" : `Error de conexión. Intenta nuevamente ⚠️ (${err.message})`;
       setMessages([...newMessages, { role: "assistant", content: msg }]);
     }
     setLoading(false);
